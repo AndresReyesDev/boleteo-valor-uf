@@ -27,7 +27,7 @@ jobs:
       - name: Build and Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: main # Pushes the updates to the master branch.
+          ACCESS_TOKEN: ${{ secrets.PAT }}
+          BRANCH: main
           FOLDER: fetch-api-data-action
           TARGET_FOLDER: uf
