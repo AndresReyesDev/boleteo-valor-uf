@@ -11,7 +11,7 @@ on:
         tags:
           description: 'Test scenario tags'  
 jobs:
-  refresh-feed:
+  rescue-uf:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -22,7 +22,7 @@ jobs:
       - name: Fetch API Data 📦
         uses: JamesIves/fetch-api-data-action@releases/v1
         with:
-          ENDPOINT: https://api.cmfchile.cl/api-sbifv3/recursos_api/uf?apikey=${{ secrets.API_KEY }}&formato=json
+          ENDPOINT: https://mindicador.cl/api
           retry: true
       - name: Build and Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
