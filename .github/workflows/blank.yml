@@ -1,0 +1,25 @@
+name: Refresh Feed
+on: 
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  refresh-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Fetch API Data 📦
+        uses: JamesIves/fetch-api-data-action@releases/v1
+        with:
+          ENDPOINT: https://api.cmfchile.cl/api-sbifv3/recursos_api/uf?apikey=${{ secrets.API_KEY }}&formato=json
+          retry: true
+      - name: Build and Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: master # Pushes the updates to the master branch.
+          FOLDER: fetch-api-data-action
+          TARGET_FOLDER: uf
