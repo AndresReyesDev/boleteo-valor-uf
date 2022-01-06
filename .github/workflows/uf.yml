@@ -28,6 +28,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: master # Pushes the updates to the master branch.
+          BRANCH: main # Pushes the updates to the master branch.
           FOLDER: fetch-api-data-action
           TARGET_FOLDER: uf
