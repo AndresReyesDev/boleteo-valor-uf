@@ -1,7 +1,7 @@
 name: Rescue Daily UF
 on: 
   schedule:
-    - cron: '15 3 * * *'
+    - cron: '15 5 * * *'
   workflow_dispatch:
       inputs:
         logLevel:
