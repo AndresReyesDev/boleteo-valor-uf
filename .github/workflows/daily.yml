@@ -38,11 +38,12 @@ jobs:
         run: |
           find daily/ -type f -name '*.json' -mtime +365 -exec rm {} \;
 
-      - name: Commit and Push Changes 🚀
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git diff --staged --quiet || git commit -m "Updated and cleaned UF values"
-          git push
+      - name: Build and Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.PAT }}
+          BRANCH: main
+          FOLDER: daily
+          TARGET_FOLDER: uf
+          CLEAN: true
 
