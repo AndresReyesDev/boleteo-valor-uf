@@ -30,6 +30,7 @@ jobs:
           RESPONSE=$(curl -s "https://api.cmfchile.cl/api-sbifv3/recursos_api/uf/${TODAY}?apikey=${API_KEY}&formato=json")
           UF_VALUE=$(echo $RESPONSE | jq '.UFs[0]')
           UF_DATE=$(echo $UF_VALUE | jq -r '.Fecha' | sed 's/-//g')
+          mkdir -p daily
           echo "UF_DATE=$UF_DATE" >> $GITHUB_ENV
           echo $UF_VALUE > "daily/${UF_DATE}.json"
 
