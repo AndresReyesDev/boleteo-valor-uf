@@ -44,5 +44,5 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.PAT }}
           BRANCH: main
           FOLDER: daily
-          TARGET_FOLDER: uf
+          TARGET_FOLDER: daily
 
