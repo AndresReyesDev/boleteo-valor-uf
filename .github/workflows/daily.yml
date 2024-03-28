@@ -1,0 +1,47 @@
+name: Rescue Daily UF
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
+
+jobs:
+  rescue-uf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Fetch UF Value for Today 📦
+        id: fetch_uf
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          TODAY=$(date +%Y/%m/%d)
+          RESPONSE=$(curl -s "https://api.cmfchile.cl/api-sbifv3/recursos_api/uf/${TODAY}?apikey=${{secrets.API_KEY}}&formato=json")
+          UF_VALUE=$(echo $RESPONSE | jq '.UFs[0]')
+          UF_DATE=$(echo $UF_VALUE | jq -r '.Fecha' | sed 's/-//g')
+          echo "UF_DATE=$UF_DATE" >> $GITHUB_ENV
+          echo $UF_VALUE > "daily/${UF_DATE}.json"
+
+      - name: Remove Files Older Than 365 Days 🔥
+        run: |
+          find daily/ -type f -name '*.json' -mtime +365 -exec rm {} \;
+
+      - name: Commit and Push Changes 🚀
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "Updated and cleaned UF values"
+          git push
+
