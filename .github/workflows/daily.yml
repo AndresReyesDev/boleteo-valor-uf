@@ -1,4 +1,4 @@
-name: Rescue Daily UF
+name: Store Daily UF
 
 on:
   schedule:
