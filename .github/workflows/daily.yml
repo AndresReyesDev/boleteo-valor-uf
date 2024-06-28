@@ -27,7 +27,7 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
         run: |
           TODAY=$(date +%Y/%m/dias/%d)
-          RESPONSE=$(curl -s "https://api.cmfchile.cl/api-sbifv3/recursos_api/uf/${TODAY}?apikey=${API_KEY}&formato=json")
+          RESPONSE=$(curl -s "https://api.sbif.cl/api-sbifv3/recursos_api/uf/${TODAY}?apikey=${API_KEY}&formato=json")
           UF_VALUE=$(echo $RESPONSE | jq '.UFs[0]')
           UF_DATE=$(echo $UF_VALUE | jq -r '.Fecha' | sed 's/-//g')
           mkdir -p daily
